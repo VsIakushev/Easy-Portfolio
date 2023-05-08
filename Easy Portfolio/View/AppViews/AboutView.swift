@@ -13,6 +13,7 @@ struct AboutView: View {
             Text("About View")
                 .bold()
             Text("Asset alocations for all profiles")
+            Text("ETF List")
             Text("About ViFinance: Links, Contacts")
         }
     }
