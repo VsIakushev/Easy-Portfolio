@@ -17,46 +17,55 @@ struct TestView: View {
     @State private var currentQuestionIndex = 0
     @State private var totalScore = 0
     
+    var questions: [Question]
+    var successNotification: [String]
+    
     var body: some View {
-        VStack {
-            Text(viewModel.riskToleranceQuestions[currentQuestionIndex].text)
-                .font(.title)
-                .padding()
-            
-            ForEach(viewModel.riskToleranceQuestions[currentQuestionIndex].answers, id: \.text) { answer in
-                Button(action: {
-                    self.totalScore += answer.score
-                    if self.currentQuestionIndex < self.viewModel.riskToleranceQuestions.count - 1 {
-                        self.currentQuestionIndex += 1
-                    } else {
-                        print(totalScore)
-                        viewModel.saveRiskScore()
-                        showPassedAlert = true
-                        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
-                            showPassedAlert = false
+           
+            VStack {
+                
+                Text(questions[currentQuestionIndex].text)
+                    .multilineTextAlignment(.center)
+                    .font(.title3)
+                    .padding()
+                
+                ForEach(questions[currentQuestionIndex].answers, id: \.text) { answer in
+                    Button(action: {
+                        self.totalScore += answer.score
+                        if self.currentQuestionIndex < questions.count - 1 {
+                            self.currentQuestionIndex += 1
+                        } else {
+                            print(totalScore)
+                            viewModel.saveScore(currentQuestionIndex: currentQuestionIndex)
+                            viewModel.saveGoalData(currentQuestionIndex: currentQuestionIndex)
+                            showPassedAlert = true
+                            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+                                showPassedAlert = false
+                            }
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        presentationMode.wrappedValue.dismiss()
-                        
+                    }) {
+                        Text(answer.text)
+                            .modifier(MyButtonStyle())
                     }
-                }) {
-                    Text(answer.text)
-                        .font(.headline)
-                        .padding()
                 }
+                .padding(5)
+                
+                Spacer()
             }
-            
-            Text("Total score: \(totalScore)")
-                .font(.title)
-                .padding()
-        }
-        .alert(isPresented: $showPassedAlert) {
-            Alert(title: Text("Test is Complete!"), message: Text("Your Risk Score saved. Now You can create Portfolio"), dismissButton: .default(Text("OK")))
-        }
+            .alert(isPresented: $showPassedAlert) {
+                Alert(title: Text(successNotification[0]), message: Text(successNotification[1]), dismissButton: .default(Text("OK")))
+            }
     }
 }
 
 struct TestView_Previews: PreviewProvider {
     static var previews: some View {
-        TestView()
+        TestView(questions: [Question(text: "I would describe my knowledge of investments as:", answers: [
+            Answer(text: "None", score: 1),
+            Answer(text: "Limited", score: 3),
+            Answer(text: "Good", score: 7),
+            Answer(text: "Extensive", score: 10),
+        ])], successNotification: ["Test is Complete!", "Success"])
     }
 }

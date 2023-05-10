@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
+    @StateObject private var testViewModel = TestViewModel()
     
     var body: some View {
         NavigationView {
@@ -17,12 +18,19 @@ struct ProfileView: View {
                 Text("Profile View")
                     .bold()
                 Text("Questions for risk profiling here")
-                NavigationLink(destination: TestView()) {
+                NavigationLink(destination: TestView(questions: testViewModel.riskToleranceQuestions, successNotification: testViewModel.alertRiskTestComplete)) {
                     Text("Risk Profiling Test")
+                        .modifier(MyButtonStyle())
+                        .padding(5)
+
                 }
-                NavigationLink(destination: TestView()) {
+                NavigationLink(destination: NewGoalView()) {
                     Text("Create new Goal")
+                        .modifier(MyButtonStyle())
+                        .padding(5)
                 }
+                
+                Spacer()
             }
         }
     }

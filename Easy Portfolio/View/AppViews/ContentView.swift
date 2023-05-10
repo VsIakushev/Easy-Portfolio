@@ -5,6 +5,8 @@
 //  Created by Vitaliy Iakushev on 06.05.2023.
 //
 
+// добавить смену экранов по свайпу (делал в ксеоме)
+
 import SwiftUI
 
 struct ContentView: View {

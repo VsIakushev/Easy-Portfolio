@@ -64,14 +64,32 @@ final class TestViewModel: ObservableObject {
     ]),
     ]
     
+    @Published var alertRiskTestComplete = ["Test is Complete!", "Your Risk Score saved. Now You can create Goal and Portfolio"]
+    
+    @Published var alertGoalCreated = ["Your Goal & Portfolio successfuly created!", "Now You can see your Asset Allocaion in Portfolio bookmark"]
+    
     var currentQuestionIndex = 0
     var totalRiskScore = 0
     
-    func saveRiskScore() {
+    func saveScore(currentQuestionIndex: Int) {
+        if currentQuestionIndex > 2 {
+            // save RiskToleranceScore
+            print("Saving Risk Tolerance Score")
+        } else {
+            // save TimeHorizonScore
+            print("Saving Time Horizon Score")
+        }
+        
         
     }
     
-    func saveTimeHorizonScore() {
+    func saveGoalData(currentQuestionIndex: Int) {
+        if currentQuestionIndex > 2 {
+            return
+        } else {
+            // save Goal Data
+            print("Saving Goal Data")
+        }
         
     }
     
