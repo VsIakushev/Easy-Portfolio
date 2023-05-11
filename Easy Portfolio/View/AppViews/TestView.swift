@@ -16,18 +16,47 @@ struct TestView: View {
     @State private var showPassedAlert = false
     @State private var currentQuestionIndex = 0
     @State private var totalScore = 0
+    @State private var goalName: String = ""
+    @State private var initialAmount: String = ""
+    @State private var finalAmount: String = ""
     
     var questions: [Question]
     var successNotification: [String]
     
     var body: some View {
-           
+        
+        VStack {
+            if questions.count < 3 {
+                VStack {
+                    Text("Create new Goal")
+                        .font(.title)
+                    Text("Please fill in the fields and answer the questions below")
+                        .multilineTextAlignment(.center)
+                    //                            .font(.title3)
+                        .padding([.top, .leading,. trailing], 5)
+                    
+                    TextField("Enter new Goal's name", text: $goalName)
+                        .modifier(MyTextFieldStyle())
+                    
+                    TextField("Enter initial (current) amount (in $)", text: $initialAmount)
+                        .modifier(MyTextFieldStyle())
+                        .keyboardType(.decimalPad)
+                    
+                    TextField("Enter final Goal amount (in $)" , text: $finalAmount)
+                        .modifier(MyTextFieldStyle())
+                        .padding(.bottom, 10)
+                        .keyboardType(.decimalPad)
+                    
+                    Divider()
+                }
+                .frame(minHeight: 350)
+            }
+            
             VStack {
-                
                 Text(questions[currentQuestionIndex].text)
                     .multilineTextAlignment(.center)
                     .font(.title3)
-                    .padding()
+                    .padding([.leading, .trailing], 5)
                 
                 ForEach(questions[currentQuestionIndex].answers, id: \.text) { answer in
                     Button(action: {
@@ -35,9 +64,15 @@ struct TestView: View {
                         if self.currentQuestionIndex < questions.count - 1 {
                             self.currentQuestionIndex += 1
                         } else {
+                            // Auto-Save and Dismiss
                             print(totalScore)
-                            viewModel.saveScore(currentQuestionIndex: currentQuestionIndex)
-                            viewModel.saveGoalData(currentQuestionIndex: currentQuestionIndex)
+                            viewModel.saveScore(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore)
+                            
+                            
+                            viewModel.saveNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
+                            viewModel.saveGoals(goals: userGoals)
+                            
+                            
                             showPassedAlert = true
                             Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
                                 showPassedAlert = false
@@ -51,11 +86,20 @@ struct TestView: View {
                 }
                 .padding(5)
                 
-                Spacer()
             }
-            .alert(isPresented: $showPassedAlert) {
-                Alert(title: Text(successNotification[0]), message: Text(successNotification[1]), dismissButton: .default(Text("OK")))
-            }
+            
+            
+            Spacer()
+        }
+        .gesture(DragGesture().onChanged { _ in
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        })
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+        .alert(isPresented: $showPassedAlert) {
+            Alert(title: Text(successNotification[0]), message: Text(successNotification[1]), dismissButton: .default(Text("OK")))
+        }
     }
 }
 

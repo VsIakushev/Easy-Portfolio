@@ -24,14 +24,30 @@ struct ProfileView: View {
                         .padding(5)
 
                 }
-                NavigationLink(destination: NewGoalView()) {
+                NavigationLink(destination: TestView(questions: testViewModel.timeHorizonQuestions, successNotification: testViewModel.alertGoalCreated)) {
                     Text("Create new Goal")
                         .modifier(MyButtonStyle())
                         .padding(5)
                 }
                 
+                Button {
+                    
+                    print(userRiskToleranceScore)
+                    print(userGoals)
+                    print("Xm")
+                } label: {
+                    Text("test Button")
+                        .modifier(MyButtonStyle())
+                        .padding(5)
+                }
+
+                
                 Spacer()
             }
+        }
+        .onAppear {
+            testViewModel.loadUserRiskToleranceScore()
+            userGoals = testViewModel.loadGoals()
         }
     }
 }

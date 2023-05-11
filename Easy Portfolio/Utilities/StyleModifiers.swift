@@ -21,7 +21,7 @@ struct MyButtonStyle: ViewModifier {
 struct MyTextFieldStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title2)
+            .font(.title3)
             .padding([.leading, .trailing], 20)
             .padding([.top, .bottom], 10)
             .textFieldStyle(.roundedBorder)

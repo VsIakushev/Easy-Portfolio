@@ -68,34 +68,99 @@ final class TestViewModel: ObservableObject {
     
     @Published var alertGoalCreated = ["Your Goal & Portfolio successfuly created!", "Now You can see your Asset Allocaion in Portfolio bookmark"]
     
+    @Published var alertFillAllTextFields = ["Empty fields left!", "Please fill in all fields: Goal's name, initial and final amounts"]
+    
+    @Published var alertWrongFormat = ["Wrong format!", "Amounts must be whole or fractional numbers"]
+    
+    
     var currentQuestionIndex = 0
     var totalRiskScore = 0
     
-    func saveScore(currentQuestionIndex: Int) {
+    func saveScore(currentQuestionIndex: Int, currentScore: Int) {
         if currentQuestionIndex > 2 {
             // save RiskToleranceScore
+            UserDefaults.standard.set(currentScore, forKey: "userRiskToleranceScore")
             print("Saving Risk Tolerance Score")
         } else {
             // save TimeHorizonScore
             print("Saving Time Horizon Score")
         }
-        
-        
     }
     
-    func saveGoalData(currentQuestionIndex: Int) {
+    func saveUserRiskToleranceScore(currentScore: Int) {
+        UserDefaults.standard.set(currentScore, forKey: "userRiskToleranceScore")
+    }
+    
+    func loadUserRiskToleranceScore() {
+        guard let score = UserDefaults.standard.integer(forKey: "userRiskToleranceScore") as? Int else { return }
+        userRiskToleranceScore = score
+    }
+    
+    func saveNewGoal(currentQuestionIndex: Int, currentScore: Int, goalName: String, initialAmount: String, goalAmount: String) {
         if currentQuestionIndex > 2 {
             return
         } else {
             // save Goal Data
-            print("Saving Goal Data")
+            userGoals.append(Goal(name: goalName, timeHorizonScore: currentScore, currentAmount: Double(initialAmount) ?? 0, goalAmount: Double(goalAmount) ?? 0))
         }
-        
     }
     
-    func loadRiskScore(){
-        
+    func saveGoals(goals: [Goal]) {
+        if currentQuestionIndex > 2 {
+            return
+        } else {
+            // save Goal Data
+            if let encoded = try? JSONEncoder().encode(goals) {
+                        UserDefaults.standard.set(encoded, forKey: "userGoals")
+                    }
+//            userGoals.append(Goal(name: goalName, timeHorizonScore: currentScore, currentAmount: Double(initialAmount) ?? 0, goalAmount: Double(goalAmount) ?? 0))
+//
+//            UserDefaults.standard.set(userGoals, forKey: "userGoals")
+//            print("Saving Goal Data")
+        }
     }
+    
+    
+    // Info about pa
+    func loadGoals() -> [Goal] {
+        if let data = UserDefaults.standard.object(forKey: "userGoals") as? Data,
+                  let array = try? JSONDecoder().decode([Goal].self, from: data) {
+                   return array
+               }
+               print("There is no saved Goals")
+               return []
+//        guard let tempGoalArray = UserDefaults.standard.array(forKey: "userGoals") as? Array<Goal> else {
+//            print("Arrays of Goals is empty!")
+//            return
+//        }
+//        print("Goals Loaded")
+//        userGoals = tempGoalArray
+    }
+    
+//    func saveCamerasToUserDetaults(arrayOfCameras: [Camera]) {
+//        if let encoded = try? JSONEncoder().encode(arrayOfCameras) {
+//            UserDefaults.standard.set(encoded, forKey: "arrayOfCameras")
+//            numbersOfCameras = arrayOfCameras.count
+//        }
+//    }
+//
+//    func loadCamerasFromUserDefaults() -> [Camera]? {
+//        if let data = UserDefaults.standard.object(forKey: "arrayOfCameras") as? Data,
+//           let array = try? JSONDecoder().decode([Camera].self, from: data) {
+//            numbersOfCameras = array.count
+//            return array
+//
+//        }
+//        print("Нет сохраненных камер")
+//        return nil
+//    }
+//
+//    func deleteAllCamerasFromUserDefaults() {
+//        UserDefaults.standard.set(nil, forKey: "arrayOfCameras")
+//        numbersOfCameras = 0
+//    }
+    
+    
     
 }
 

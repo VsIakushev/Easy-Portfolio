@@ -11,7 +11,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        MainTabView()
+        ZStack {
+            MainTabView()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

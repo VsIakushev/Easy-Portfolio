@@ -29,6 +29,8 @@
 		5754D6B92A08363C004D9162 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5754D6B82A08363C004D9162 /* Asset.swift */; };
 		5764990F2A095CD000776523 /* NewGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764990E2A095CD000776523 /* NewGoalView.swift */; };
 		576499112A0B1CDA00776523 /* StyleModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499102A0B1CDA00776523 /* StyleModifiers.swift */; };
+		576499132A0B3F8C00776523 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499122A0B3F8C00776523 /* Data.swift */; };
+		576499172A0C42AE00776523 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499162A0C42AE00776523 /* Goal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		5754D6B82A08363C004D9162 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		5764990E2A095CD000776523 /* NewGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGoalView.swift; sourceTree = "<group>"; };
 		576499102A0B1CDA00776523 /* StyleModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleModifiers.swift; sourceTree = "<group>"; };
+		576499122A0B3F8C00776523 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		576499162A0C42AE00776523 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 		5754D6872A06DB01004D9162 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				576499122A0B3F8C00776523 /* Data.swift */,
 				5754D67D2A06C896004D9162 /* enums.swift */,
 				576499102A0B1CDA00776523 /* StyleModifiers.swift */,
 			);
@@ -153,6 +158,7 @@
 			children = (
 				5754D67B2A06C83E004D9162 /* TabItemData.swift */,
 				5754D68C2A06E082004D9162 /* Question.swift */,
+				576499162A0C42AE00776523 /* Goal.swift */,
 				5754D6B22A075297004D9162 /* Answer.swift */,
 				5754D6B62A08361A004D9162 /* Portfolio.swift */,
 				5754D6B82A08363C004D9162 /* Asset.swift */,
@@ -245,7 +251,9 @@
 				5754D6822A06C8EC004D9162 /* PortfolioView.swift in Sources */,
 				5754D6842A06C903004D9162 /* AboutView.swift in Sources */,
 				5754D6802A06C8C9004D9162 /* ProfileView.swift in Sources */,
+				576499172A0C42AE00776523 /* Goal.swift in Sources */,
 				5754D6672A06C2C1004D9162 /* ContentView.swift in Sources */,
+				576499132A0B3F8C00776523 /* Data.swift in Sources */,
 				5754D6762A06C7D3004D9162 /* TabItemVies.swift in Sources */,
 				5764990F2A095CD000776523 /* NewGoalView.swift in Sources */,
 				5754D68B2A06E03D004D9162 /* ProfileViewModel.swift in Sources */,

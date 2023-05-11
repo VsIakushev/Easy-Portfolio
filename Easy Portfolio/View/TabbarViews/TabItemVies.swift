@@ -17,7 +17,6 @@ struct TabItemView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 32, height: 32)
-                .animation(.default)
             
             Spacer().frame(height: 4)
             
