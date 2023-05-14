@@ -31,6 +31,8 @@
 		576499112A0B1CDA00776523 /* StyleModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499102A0B1CDA00776523 /* StyleModifiers.swift */; };
 		576499132A0B3F8C00776523 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499122A0B3F8C00776523 /* Data.swift */; };
 		576499172A0C42AE00776523 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499162A0C42AE00776523 /* Goal.swift */; };
+		576499192A10874B00776523 /* GoalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576499182A10874B00776523 /* GoalDetailsView.swift */; };
+		5764991B2A10927600776523 /* GoalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764991A2A10927600776523 /* GoalManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +61,8 @@
 		576499102A0B1CDA00776523 /* StyleModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleModifiers.swift; sourceTree = "<group>"; };
 		576499122A0B3F8C00776523 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		576499162A0C42AE00776523 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		576499182A10874B00776523 /* GoalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetailsView.swift; sourceTree = "<group>"; };
+		5764991A2A10927600776523 /* GoalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 				5754D6832A06C903004D9162 /* AboutView.swift */,
 				5754D68E2A06FFD7004D9162 /* TestView.swift */,
 				5764990E2A095CD000776523 /* NewGoalView.swift */,
+				576499182A10874B00776523 /* GoalDetailsView.swift */,
 			);
 			path = AppViews;
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 		5754D6872A06DB01004D9162 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				5764991A2A10927600776523 /* GoalManager.swift */,
 				576499122A0B3F8C00776523 /* Data.swift */,
 				5754D67D2A06C896004D9162 /* enums.swift */,
 				576499102A0B1CDA00776523 /* StyleModifiers.swift */,
@@ -255,12 +261,14 @@
 				5754D6672A06C2C1004D9162 /* ContentView.swift in Sources */,
 				576499132A0B3F8C00776523 /* Data.swift in Sources */,
 				5754D6762A06C7D3004D9162 /* TabItemVies.swift in Sources */,
+				5764991B2A10927600776523 /* GoalManager.swift in Sources */,
 				5764990F2A095CD000776523 /* NewGoalView.swift in Sources */,
 				5754D68B2A06E03D004D9162 /* ProfileViewModel.swift in Sources */,
 				5754D6B72A08361A004D9162 /* Portfolio.swift in Sources */,
 				5754D67C2A06C83E004D9162 /* TabItemData.swift in Sources */,
 				5754D68D2A06E082004D9162 /* Question.swift in Sources */,
 				5754D6B52A0752B4004D9162 /* TestViewModel.swift in Sources */,
+				576499192A10874B00776523 /* GoalDetailsView.swift in Sources */,
 				576499112A0B1CDA00776523 /* StyleModifiers.swift in Sources */,
 				5754D67A2A06C80F004D9162 /* CustomTabView.swift in Sources */,
 				5754D6652A06C2C1004D9162 /* Easy_PortfolioApp.swift in Sources */,

@@ -9,45 +9,84 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    var array: [Goal] = [Goal(name: "Goal 1", timeHorizonScore: 14, currentAmount: 300, goalAmount: 5000), Goal(name: "Goal 2", timeHorizonScore: 14, currentAmount: 300, goalAmount: 5000)]
+    
     @StateObject private var viewModel = ProfileViewModel()
     @StateObject private var testViewModel = TestViewModel()
+    @State private var goals: [Goal] = []
     
     var body: some View {
         NavigationView {
             VStack {
-                Text("Profile View")
-                    .bold()
-                Text("Questions for risk profiling here")
-                NavigationLink(destination: TestView(questions: testViewModel.riskToleranceQuestions, successNotification: testViewModel.alertRiskTestComplete)) {
-                    Text("Risk Profiling Test")
-                        .modifier(MyButtonStyle())
-                        .padding(5)
-
-                }
-                NavigationLink(destination: TestView(questions: testViewModel.timeHorizonQuestions, successNotification: testViewModel.alertGoalCreated)) {
-                    Text("Create new Goal")
-                        .modifier(MyButtonStyle())
-                        .padding(5)
-                }
-                
-                Button {
+                Group {
+                    Text("Profile View")
+                        .bold()
+                    Text("Questions for risk profiling here")
+                    NavigationLink(destination: TestView(questions: testViewModel.riskToleranceQuestions, successNotification: testViewModel.alertRiskTestComplete)) {
+                        Text("Risk Profiling Test")
+                            .modifier(MyButtonStyle())
+                            .padding(5)
+                        
+                    }
+                    NavigationLink(destination: TestView(questions: testViewModel.timeHorizonQuestions, successNotification: testViewModel.alertGoalCreated)) {
+                        Text("Create new Goal")
+                            .modifier(MyButtonStyle())
+                            .padding(5)
+                    }
                     
-                    print(userRiskToleranceScore)
-                    print(userGoals)
-                    print("Xm")
-                } label: {
-                    Text("test Button")
-                        .modifier(MyButtonStyle())
-                        .padding(5)
+                    Button {
+                        
+                        print(userRiskToleranceScore)
+                        print(userGoals)
+                        print("Xm")
+                    } label: {
+                        Text("test Button")
+                            .modifier(MyButtonStyle())
+                            .padding(5)
+                    }
+                    
                 }
+                // change array to userGoals later
+                List(goals) { goal in
+                    NavigationLink(destination: GoalDetailsView(goal: goal)) {
+                        HStack{
+                            
+                            Text(goal.name)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("$ \(String(format: "%.2f", goal.currentAmount))")
+                        }
+                        .padding(.vertical,10)
+                        .foregroundColor(.primary)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .swipeActions {
+                        Button {
+                            if let index = userGoals.firstIndex(of: goal) {
+                                userGoals.remove(at: index)
+                                testViewModel.saveGoals(currentQuestionIndex: 0, goals: userGoals)
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        .tint(.red)
+                    }
+                }
+                .listStyle(PlainListStyle())
+//                .navigationTitle("Goals")
+                
+                
+                Text("Goals?")
 
                 
                 Spacer()
             }
         }
+        
         .onAppear {
             testViewModel.loadUserRiskToleranceScore()
-            userGoals = testViewModel.loadGoals()
+            goals = testViewModel.loadGoals()
         }
     }
 }

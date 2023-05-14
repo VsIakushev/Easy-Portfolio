@@ -14,6 +14,8 @@ struct ContentView: View {
         ZStack {
             MainTabView()
         }
+        .padding(.bottom)
+        .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }

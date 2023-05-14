@@ -25,14 +25,14 @@ struct TestView: View {
     
     var body: some View {
         
-        VStack {
+        ScrollView {
             if questions.count < 3 {
                 VStack {
-                    Text("Create new Goal")
-                        .font(.title)
+//                    Text("Create new Goal")
+//                        .font(.title)
                     Text("Please fill in the fields and answer the questions below")
                         .multilineTextAlignment(.center)
-                    //                            .font(.title3)
+                                                .font(.title3)
                         .padding([.top, .leading,. trailing], 5)
                     
                     TextField("Enter new Goal's name", text: $goalName)
@@ -49,9 +49,9 @@ struct TestView: View {
                     
                     Divider()
                 }
-                .frame(minHeight: 350)
+                .padding(.top, 10)
+//                .frame(minHeight: 350)
             }
-            
             VStack {
                 Text(questions[currentQuestionIndex].text)
                     .multilineTextAlignment(.center)
@@ -70,7 +70,7 @@ struct TestView: View {
                             
                             
                             viewModel.saveNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
-                            viewModel.saveGoals(goals: userGoals)
+                            viewModel.saveGoals(currentQuestionIndex: currentQuestionIndex, goals: userGoals)
                             
                             
                             showPassedAlert = true
@@ -87,10 +87,13 @@ struct TestView: View {
                 .padding(5)
                 
             }
-            
+            .padding(.top, 10)
             
             Spacer()
+            Spacer()
         }
+        .navigationTitle(questions.count < 3 ? "Create new Goal" : "Risk Tolerance Test")
+        
         .gesture(DragGesture().onChanged { _ in
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         })

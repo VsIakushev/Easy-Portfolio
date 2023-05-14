@@ -105,7 +105,7 @@ final class TestViewModel: ObservableObject {
         }
     }
     
-    func saveGoals(goals: [Goal]) {
+    func saveGoals(currentQuestionIndex: Int, goals: [Goal]) {
         if currentQuestionIndex > 2 {
             return
         } else {
@@ -113,15 +113,9 @@ final class TestViewModel: ObservableObject {
             if let encoded = try? JSONEncoder().encode(goals) {
                         UserDefaults.standard.set(encoded, forKey: "userGoals")
                     }
-//            userGoals.append(Goal(name: goalName, timeHorizonScore: currentScore, currentAmount: Double(initialAmount) ?? 0, goalAmount: Double(goalAmount) ?? 0))
-//
-//            UserDefaults.standard.set(userGoals, forKey: "userGoals")
-//            print("Saving Goal Data")
         }
     }
     
-    
-    // Info about pa
     func loadGoals() -> [Goal] {
         if let data = UserDefaults.standard.object(forKey: "userGoals") as? Data,
                   let array = try? JSONDecoder().decode([Goal].self, from: data) {
@@ -129,36 +123,11 @@ final class TestViewModel: ObservableObject {
                }
                print("There is no saved Goals")
                return []
-//        guard let tempGoalArray = UserDefaults.standard.array(forKey: "userGoals") as? Array<Goal> else {
-//            print("Arrays of Goals is empty!")
-//            return
-//        }
-//        print("Goals Loaded")
-//        userGoals = tempGoalArray
     }
     
-//    func saveCamerasToUserDetaults(arrayOfCameras: [Camera]) {
-//        if let encoded = try? JSONEncoder().encode(arrayOfCameras) {
-//            UserDefaults.standard.set(encoded, forKey: "arrayOfCameras")
-//            numbersOfCameras = arrayOfCameras.count
-//        }
-//    }
-//
-//    func loadCamerasFromUserDefaults() -> [Camera]? {
-//        if let data = UserDefaults.standard.object(forKey: "arrayOfCameras") as? Data,
-//           let array = try? JSONDecoder().decode([Camera].self, from: data) {
-//            numbersOfCameras = array.count
-//            return array
-//
-//        }
-//        print("Нет сохраненных камер")
-//        return nil
-//    }
-//
-//    func deleteAllCamerasFromUserDefaults() {
-//        UserDefaults.standard.set(nil, forKey: "arrayOfCameras")
-//        numbersOfCameras = 0
-//    }
+    func deleteGoal(index: Int ) {
+        
+    }
     
     
     
