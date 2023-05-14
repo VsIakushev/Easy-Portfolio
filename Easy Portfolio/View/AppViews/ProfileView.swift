@@ -15,6 +15,9 @@ struct ProfileView: View {
     @StateObject private var testViewModel = TestViewModel()
     @State private var goals: [Goal] = []
     
+    @ObservableObject var goalView = 
+    
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -37,7 +40,7 @@ struct ProfileView: View {
                     Button {
                         
                         print(userRiskToleranceScore)
-                        print(userGoals)
+                        print(GoalManager.shared.userGoals)
                         print("Xm")
                     } label: {
                         Text("test Button")
@@ -63,10 +66,11 @@ struct ProfileView: View {
                     .buttonStyle(PlainButtonStyle())
                     .swipeActions {
                         Button {
-                            if let index = userGoals.firstIndex(of: goal) {
-                                userGoals.remove(at: index)
-                                testViewModel.saveGoals(currentQuestionIndex: 0, goals: userGoals)
-                            }
+                            GoalManager.shared.removeGoal(goal: goal)
+//                            if let index = userGoals.firstIndex(of: goal) {
+//                                userGoals.remove(at: index)
+//                                testViewModel.saveGoals(currentQuestionIndex: 0, goals: userGoals)
+//                            }
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
@@ -86,7 +90,8 @@ struct ProfileView: View {
         
         .onAppear {
             testViewModel.loadUserRiskToleranceScore()
-            goals = testViewModel.loadGoals()
+            goals = GoalManager.shared.userGoals
+//            goals = testViewModel.loadGoals()
         }
     }
 }

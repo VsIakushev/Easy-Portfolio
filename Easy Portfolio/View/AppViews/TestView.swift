@@ -68,9 +68,10 @@ struct TestView: View {
                             print(totalScore)
                             viewModel.saveScore(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore)
                             
-                            
-                            viewModel.saveNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
-                            viewModel.saveGoals(currentQuestionIndex: currentQuestionIndex, goals: userGoals)
+                            GoalManager.shared.addNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
+                            GoalManager.shared.saveGoals(goals: GoalManager.shared.userGoals)
+//                            viewModel.saveNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
+//                            viewModel.saveGoals(currentQuestionIndex: currentQuestionIndex, goals: userGoals)
                             
                             
                             showPassedAlert = true

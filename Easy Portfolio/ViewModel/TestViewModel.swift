@@ -96,38 +96,38 @@ final class TestViewModel: ObservableObject {
         userRiskToleranceScore = score
     }
     
-    func saveNewGoal(currentQuestionIndex: Int, currentScore: Int, goalName: String, initialAmount: String, goalAmount: String) {
-        if currentQuestionIndex > 2 {
-            return
-        } else {
-            // save Goal Data
-            userGoals.append(Goal(name: goalName, timeHorizonScore: currentScore, currentAmount: Double(initialAmount) ?? 0, goalAmount: Double(goalAmount) ?? 0))
-        }
-    }
-    
-    func saveGoals(currentQuestionIndex: Int, goals: [Goal]) {
-        if currentQuestionIndex > 2 {
-            return
-        } else {
-            // save Goal Data
-            if let encoded = try? JSONEncoder().encode(goals) {
-                        UserDefaults.standard.set(encoded, forKey: "userGoals")
-                    }
-        }
-    }
-    
-    func loadGoals() -> [Goal] {
-        if let data = UserDefaults.standard.object(forKey: "userGoals") as? Data,
-                  let array = try? JSONDecoder().decode([Goal].self, from: data) {
-                   return array
-               }
-               print("There is no saved Goals")
-               return []
-    }
-    
-    func deleteGoal(index: Int ) {
-        
-    }
+//    func saveNewGoal(currentQuestionIndex: Int, currentScore: Int, goalName: String, initialAmount: String, goalAmount: String) {
+//        if currentQuestionIndex > 2 {
+//            return
+//        } else {
+//            // save Goal Data
+//            userGoals.append(Goal(name: goalName, timeHorizonScore: currentScore, currentAmount: Double(initialAmount) ?? 0, goalAmount: Double(goalAmount) ?? 0))
+//        }
+//    }
+//    
+//    func saveGoals(currentQuestionIndex: Int, goals: [Goal]) {
+//        if currentQuestionIndex > 2 {
+//            return
+//        } else {
+//            // save Goal Data
+//            if let encoded = try? JSONEncoder().encode(goals) {
+//                        UserDefaults.standard.set(encoded, forKey: "userGoals")
+//                    }
+//        }
+//    }
+//    
+//    func loadGoals() -> [Goal] {
+//        if let data = UserDefaults.standard.object(forKey: "userGoals") as? Data,
+//                  let array = try? JSONDecoder().decode([Goal].self, from: data) {
+//                   return array
+//               }
+//               print("There is no saved Goals")
+//               return []
+//    }
+//    
+//    func deleteGoal(index: Int ) {
+//        
+//    }
     
     
     

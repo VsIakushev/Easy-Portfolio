@@ -9,6 +9,6 @@ import Foundation
 
 var userRiskToleranceScore: Int = 0
 
-var userGoals: [Goal] = []
+//var userGoals: [Goal] = []
 
 
