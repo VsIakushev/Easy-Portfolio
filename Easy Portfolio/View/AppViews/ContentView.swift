@@ -19,6 +19,7 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

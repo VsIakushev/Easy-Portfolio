@@ -14,11 +14,15 @@ struct TestView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var showPassedAlert = false
+    @State private var showErrorAlert = false
+    @State private var errorMessage = ""
     @State private var currentQuestionIndex = 0
     @State private var totalScore = 0
     @State private var goalName: String = ""
     @State private var initialAmount: String = ""
     @State private var finalAmount: String = ""
+    
+    @State private var fieldsValid = false
     
     var questions: [Question]
     var successNotification: [String]
@@ -28,9 +32,7 @@ struct TestView: View {
         ScrollView {
             if questions.count < 3 {
                 VStack {
-//                    Text("Create new Goal")
-//                        .font(.title)
-                    Text("Please fill in the fields and answer the questions below")
+                    Text("Please fill in the fields first, and answer the questions below")
                         .multilineTextAlignment(.center)
                                                 .font(.title3)
                         .padding([.top, .leading,. trailing], 5)
@@ -60,25 +62,28 @@ struct TestView: View {
                 
                 ForEach(questions[currentQuestionIndex].answers, id: \.text) { answer in
                     Button(action: {
-                        self.totalScore += answer.score
-                        if self.currentQuestionIndex < questions.count - 1 {
-                            self.currentQuestionIndex += 1
-                        } else {
-                            // Auto-Save and Dismiss
-                            print(totalScore)
-                            viewModel.saveScore(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore)
-                            
-                            GoalManager.shared.addNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
-                            GoalManager.shared.saveGoals()
-//                            viewModel.saveNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
-//                            viewModel.saveGoals(currentQuestionIndex: currentQuestionIndex, goals: userGoals)
-                            
-                            
-                            showPassedAlert = true
-                            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-                                showPassedAlert = false
+                        if validateFields() {
+                            self.totalScore += answer.score
+                            if self.currentQuestionIndex < questions.count - 1 {
+                                self.currentQuestionIndex += 1
+                            } else {
+                                // Auto-Save and Dismiss
+                                print(totalScore)
+                                viewModel.saveScore(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore)
+                                
+                                GoalManager.shared.addNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
+                                GoalManager.shared.saveGoals()
+                                showPassedAlert = true
+                                Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+                                    showPassedAlert = false
+                                }
+                                presentationMode.wrappedValue.dismiss()
                             }
-                            presentationMode.wrappedValue.dismiss()
+                            
+                        } else {
+                            print("Error, fields are incorrect, make an alert")
+//                            errorMessage = "Please fill all the fields with valid values."
+                            showErrorAlert = true
                         }
                     }) {
                         Text(answer.text)
@@ -93,6 +98,12 @@ struct TestView: View {
             Spacer()
             Spacer()
         }
+        .onDisappear {
+            if !fieldsValid {
+                // If the fields are not valid, prevent the view from being dismissed
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
         .navigationTitle(questions.count < 3 ? "Create new Goal" : "Risk Tolerance Test")
         
         .gesture(DragGesture().onChanged { _ in
@@ -104,7 +115,27 @@ struct TestView: View {
         .alert(isPresented: $showPassedAlert) {
             Alert(title: Text(successNotification[0]), message: Text(successNotification[1]), dismissButton: .default(Text("OK")))
         }
+        .alert(isPresented: $showErrorAlert) {
+            Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+        }
     }
+    
+    
+    private func validateFields() -> Bool {
+        var isValid = true
+            if goalName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                errorMessage = "Please enter a goal name"
+                isValid = false
+            } else if initialAmount.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || Double(initialAmount) == nil {
+                errorMessage = "Please enter a valid initial amount"
+                isValid = false
+            } else if finalAmount.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || Double(finalAmount) == nil {
+                errorMessage = "Please enter a valid final amount"
+                isValid = false
+            }
+            return isValid
+    }
+    
 }
 
 struct TestView_Previews: PreviewProvider {
