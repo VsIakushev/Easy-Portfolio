@@ -6,11 +6,16 @@
 //
 
 import Foundation
+//import Combine
 
 class GoalManager: ObservableObject {
     static let shared = GoalManager()
     
-    @Published var userGoals: [Goal] = []
+    @Published var userGoals: [Goal] {
+        didSet {
+            saveGoals()
+        }
+    }
     
     private init() {
         // Loading goals from defaults
@@ -33,13 +38,13 @@ class GoalManager: ObservableObject {
         }
     }
     
-    func saveGoals(goals: [Goal]) {
+    func saveGoals() {
 //        if currentQuestionIndex ?? 0 > 2 {
 //            return
 //        } else {
             // save Goal Data
         print(userGoals.count)
-            if let encoded = try? JSONEncoder().encode(goals) {
+            if let encoded = try? JSONEncoder().encode(userGoals) {
                         UserDefaults.standard.set(encoded, forKey: "userGoals")
                 print(userGoals.count)
                     }
@@ -49,7 +54,7 @@ class GoalManager: ObservableObject {
     func removeGoal(goal: Goal) {
         if let index = userGoals.firstIndex(of: goal) {
             userGoals.remove(at: index)
-            saveGoals(goals: userGoals)
+            saveGoals()
         }
     }
     

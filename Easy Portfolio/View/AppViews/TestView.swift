@@ -69,7 +69,7 @@ struct TestView: View {
                             viewModel.saveScore(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore)
                             
                             GoalManager.shared.addNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
-                            GoalManager.shared.saveGoals(goals: GoalManager.shared.userGoals)
+                            GoalManager.shared.saveGoals()
 //                            viewModel.saveNewGoal(currentQuestionIndex: currentQuestionIndex, currentScore: totalScore, goalName: goalName, initialAmount: initialAmount, goalAmount: finalAmount)
 //                            viewModel.saveGoals(currentQuestionIndex: currentQuestionIndex, goals: userGoals)
                             

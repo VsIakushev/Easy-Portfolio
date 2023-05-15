@@ -15,7 +15,7 @@ struct ProfileView: View {
     @StateObject private var testViewModel = TestViewModel()
     @State private var goals: [Goal] = []
     
-    @ObservableObject var goalView = 
+    @ObservedObject var goalManager = GoalManager.shared
     
     
     var body: some View {
@@ -50,7 +50,7 @@ struct ProfileView: View {
                     
                 }
                 // change array to userGoals later
-                List(goals) { goal in
+                List(goalManager.userGoals) { goal in
                     NavigationLink(destination: GoalDetailsView(goal: goal)) {
                         HStack{
                             
@@ -78,12 +78,6 @@ struct ProfileView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
-//                .navigationTitle("Goals")
-                
-                
-                Text("Goals?")
-
-                
                 Spacer()
             }
         }
